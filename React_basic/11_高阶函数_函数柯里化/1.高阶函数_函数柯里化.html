@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello_react</title>
+</head>
+
+<body>
+    <!--准备好一个容器 -->
+    <div id="test"></div>
+
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        /*
+        高阶函数：1，函数参数是函数
+                 2，函数返回值是函数
+        函数柯里化：通过函数调用继续返回函数的方式，实现多次接受参数然后统一处理的函数编码形式
+        
+        */ 
+        // 1.创建虚拟dom
+        class Demo extends React.Component {
+            state={username:'',password:''}
+            handleSubmit=(e)=>{
+                e.preventDefault();//阻止默认事件
+                const {username,password}=this.state
+                alert(`您输入的用户名是：${username},密码是：${password}`)
+            }
+            
+            saveFormData=(dataType)=>{
+                return (e)=>{
+                    this.setState({[dataType]:e.target.value})
+                }
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        用户名: <input onChange={this.saveFormData('username')} type="text" name="username"/>
+                        密码： <input onChange={this.saveFormData('password')} type="password" name="password"/>
+                        <button>登录</button>
+                    </form>
+                )
+            }
+        }
+        // 2.渲染虚拟DOM到页面
+        ReactDOM.render(<Demo />, document.getElementById("test"))
+    </script>
+
+</body>
+
+</html>

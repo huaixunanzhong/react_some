@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>展开运算符</title>
+</head>
+<body>
+    <script>
+        // 展开对象
+        let arr1=[1,2,3,4]
+        let arr2=[5,6,7,8]
+        console.log(...arr1)//展开一个数组
+        let arr3=[...arr1,...arr2]
+        console.log(arr3)
+        // 函数中使用-剩余参数
+        function sum(...nums){
+            return nums.reduce((preValue,currValue)=>{
+                return preValue+currValue
+            })
+        }
+        console.log(sum(1,2,3,4))
+        // 构造字面量对象时使用展开语法
+        let obj1={
+            name:'陈',
+            age:17
+        }
+        // console.log(...obj1)//报错，展开运算符不能展开对象
+        let obj2={...obj1}
+        obj1.name='黄'
+        console.log(obj2)
+        console.log(obj1)
+
+        // 其实是合并
+        let obj3={...obj1,name:'谢',sex:'男'}
+        console.log(obj3)
+    </script>
+</body>
+</html>

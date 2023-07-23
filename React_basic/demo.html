@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function demo(){
+        //     // 函数开启严格模式 this指向undefined
+        //     'use strict'
+        //     console.log(this)
+        // }
+        // demo()
+
+
+        var A = {
+            name: 'A',
+            sayHello: function () {
+                // ES5把作用域分为全局作用域和局部作用域(函数作用域)
+                // 箭头函数没有自己的this,所以它的this是指向定义时该函数所在的作用域指向的对象
+                var s = () => console.log(this.name)
+                return s//返回箭头函数s
+            }
+        }
+
+        var sayHello = A.sayHello();
+        sayHello()
+    </script>
+</body>
+
+</html>

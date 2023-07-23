@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello_react</title>
+</head>
+
+<body>
+    <!--准备好一个容器 -->
+    <div id="test"></div>
+
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        // 1.创建虚拟dom
+        class Count extends React.Component {
+            constructor(props) {
+                console.log('Count----constructor')
+                super(props)
+                this.state = { count: 0 }
+            }
+            // 自定义事件
+            add = () => {
+                const { count } = this.state
+                this.setState({ count: count + 1 })
+            }
+
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+
+            force = () => {
+                this.forceUpdate()
+            }
+
+            // 组件将要挂载
+            componentWillMount() {
+                console.log('Count----componentWillMount')
+            }
+
+            // 组件挂载完毕
+            componentDidMount() {
+                console.log('Count----componentDidMount')
+            }
+
+            // 组件将要被卸载
+            componentWillUnmount() {
+                console.log('Count----componentWillUnmount')
+            }
+
+            // 控制组件更新的阀门
+            shouldComponentUpdate() {
+                console.log('Count----shouldComponentUpdate')
+                return true
+            }
+
+            // 组件将要更新
+            componentWillUpdate() {
+                console.log('Count----componentWillUpdate')
+            }
+
+            // 组件更新完毕
+            componentDidUpdate() {
+                console.log('Count----componentDidUpdate')
+            }
+
+            render() {
+                console.log('Count----render')
+                const { count } = this.state
+                return (
+                    <div>
+                        <h1>当前求和为：{count}</h1>
+                        <button onClick={this.add}>点我+1</button>
+                        <button onClick={this.death}>卸载组件</button>
+                        <button onClick={this.force}>不更改state的数据,更新页面</button>
+                    </div>
+                )
+            }
+        }
+
+        class A extends React.Component {
+            state={carName:'奔驰'}
+            changeCar=()=>{
+                const {carName}=this.state
+                this.setState({carName:'奥拓'})
+            }
+            render() {
+                return (
+                    <div>
+                        <div>我是A组件</div>
+                        <button onClick={this.changeCar}>换车</button>
+                        <B carName={this.state.carName}/>
+                    </div>
+                )
+            }
+        }
+
+        class   B extends React.Component{
+            componentWillReceiveProps(props){
+                console.log("B------componentWillReceiveProps",props)
+            }
+            render(){
+                return (
+                    <div>我是B组件,接收到的车是：{this.props.carName}</div>
+                )
+            }
+        }
+
+
+
+
+
+        // 2.渲染虚拟DOM到页面
+        ReactDOM.render(<A />, document.getElementById("test"))
+    </script>
+
+</body>
+
+</html>
